@@ -3,8 +3,10 @@
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
+use App\Models\Registrasi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/todo/{todo}/incomplete', [TodoController::class, 'uncomplete'])->name('todo.uncomplete');
     Route::delete('/todo/{todo}', [TodoController::class, 'destroy'])->name('todo.destroy');
     Route::delete('/todo', [TodoController::class, 'destroyCompleted'])->name('todo.deleteallcompleted');
+    Route::resource('registrasi', RegistrasiController::class);
 
 
     Route::middleware('admin')->group(function () {
@@ -49,6 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/user/{user}/removeadmin', [UserController::class, 'removeadmin'])->name('user.removeadmin');
         Route::resource('buku', BukuController::class);
         Route::resource('penulis', PenulisController::class);
+        Route::resource('registrasi', RegistrasiController::class);
     });
 });
 

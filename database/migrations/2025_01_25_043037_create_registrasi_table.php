@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('registrasi', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->string('email');
+            $table->date('tanggal_lahir');
+            $table->string('no_hp');
+            $table->unsignedBigInteger('id_agama'); // Ubah jenis data menjadi unsignedBigInteger
+            $table->text('alamat');
             $table->timestamps();
+
+            $table->foreign('id_agama')->references('id')->on('agama'); // Tambahkan foreign key
         });
     }
 
