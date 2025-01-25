@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Agama;
 use App\Models\Registrasi;
+use App\Models\Agama;
+use App\Models\Buku;
+use Illuminate\Http\Request;
 use PDF;
 
 class RegistrasiController extends Controller
@@ -14,11 +15,11 @@ class RegistrasiController extends Controller
      */
     public function index()
     {
-        // Mengambil data agama dan registrasi
-        $agama = Agama::all();
-        $registrasi = Registrasi::all(); // Menampilkan semua data registrasi
+        // Mengambil data registrasi, agama, dan buku
+        $registrasi = Registrasi::with(['agama', 'buku'])->get();
 
-        return view('registrasi.index', compact('agama', 'registrasi')); // Menggunakan 'index' untuk menampilkan daftar registrasi
+        // Menampilkan daftar registrasi
+        return view('registrasi.index', compact('registrasi'));
     }
 
     /**
@@ -26,9 +27,10 @@ class RegistrasiController extends Controller
      */
     public function create()
     {
-        $agama = Agama::all(); // Ambil data agama untuk ditampilkan di form
+        $agama = Agama::all();  // Ambil semua data agama
+        $buku = Buku::all();    // Ambil semua data buku
 
-        return view('registrasi.create', compact('agama')); // Menampilkan form pendaftaran
+        return view('registrasi.create', compact('agama', 'buku'));
     }
 
     /**
@@ -42,33 +44,98 @@ class RegistrasiController extends Controller
             'tanggal_lahir' => 'required|date',
             'no_hp' => 'required|numeric',
             'agama' => 'required|integer',
+            'buku' => 'required|integer',
             'alamat' => 'required|string',
         ]);
 
-        // Menyimpan data registrasi baru
-        $registrasi = new Registrasi();
-        $registrasi->nama = $request->nama;
-        $registrasi->email = $request->email;
-        $registrasi->tanggal_lahir = $request->tanggal_lahir;
-        $registrasi->no_hp = $request->no_hp;
-        $registrasi->id_agama = $request->agama;
-        $registrasi->alamat = $request->alamat;
-        $registrasi->save(); // Simpan data registrasi
+        Registrasi::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'no_hp' => $request->no_hp,
+            'id_agama' => $request->agama,
+            'id_buku' => $request->buku,
+            'alamat' => $request->alamat,
+        ]);
 
-        $id_pendaftaran = $registrasi->id;
-
-        return redirect('/registrasi/cetak/' . $id_pendaftaran)->with('pesan', 'Pendaftaran berhasil');
+        return redirect()->route('registrasi.index')->with('pesan', 'Pendaftaran berhasil');
     }
 
     /**
-     * Cetak kartu registrasi.
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $registrasi = Registrasi::findOrFail($id);
+        return view('registrasi.show', compact('registrasi'));
+    }
+
+
+    /**
+     * Print the registration card.
      */
     public function cetak($id)
     {
-        $registrasi = Registrasi::findOrFail($id); // Mengambil data registrasi berdasarkan ID
+        // Ambil data registrasi berdasarkan ID
+        $registrasi = Registrasi::findOrFail($id);
 
-        // Menghasilkan file PDF dari view
+        // Generate PDF menggunakan library PDF
         $pdf = PDF::loadView('registrasi.cetak', ['registrasi' => $registrasi]);
-        return $pdf->download('karturegistrasi.pdf'); // Mengunduh file PDF
+
+        // Download file PDF
+        return $pdf->download('karturegistrasi.pdf');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $registrasi = Registrasi::findOrFail($id);
+        $agama = Agama::all();
+        $buku = Buku::all();
+        return view('registrasi.edit', compact('registrasi', 'agama', 'buku'));
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string',
+            'email' => 'required|email',
+            'tanggal_lahir' => 'required|date',
+            'no_hp' => 'required|numeric',
+            'agama' => 'required|integer',
+            'buku' => 'required|integer',
+            'alamat' => 'required|string',
+        ]);
+
+        $registrasi = Registrasi::findOrFail($id);
+        $registrasi->update([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'no_hp' => $request->no_hp,
+            'id_agama' => $request->agama,
+            'id_buku' => $request->buku,
+            'alamat' => $request->alamat,
+        ]);
+
+        return redirect()->route('registrasi.index')->with('pesan', 'Pendaftaran berhasil diupdate');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        // Menghapus data registrasi
+        $registrasi = Registrasi::findOrFail($id);
+        $registrasi->delete();
+
+        return redirect()->route('registrasi.index')->with('pesan', 'Pendaftaran berhasil dihapus');
     }
 }

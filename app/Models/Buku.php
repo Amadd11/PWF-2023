@@ -16,4 +16,12 @@ class Buku extends Model
     {
         return $this->belongsTo(Penulis::class, 'id_penulis');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function registrasi()
+    {
+        return $this->hasMany(Registrasi::class, 'id_buku');
+    }
 }

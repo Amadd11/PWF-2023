@@ -11,7 +11,7 @@
                 <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between">
                         <div>
-                            <x-create-button href="{{ route('registrasi.create') }}" />
+                            <x-pinjam-button href="{{ route('registrasi.create') }}" />
                         </div>
                         <div>
                             @if (session('pesan'))
@@ -33,6 +33,7 @@
                                 <th scope="col" class="px-6 py-3">Tanggal Lahir</th>
                                 <th scope="col" class="px-6 py-3">Nomor Telp</th>
                                 <th scope="col" class="px-6 py-3">Agama</th>
+                                <th scope="col" class="px-6 py-3">Buku</th> <!-- Kolom Buku Ditambahkan -->
                                 <th scope="col" class="px-6 py-3">Alamat</th>
                                 <th scope="col" class="px-6 py-3">Aksi</th>
                             </tr>
@@ -45,6 +46,8 @@
                                     <td class="px-6 py-4">{{ $data->tanggal_lahir }}</td>
                                     <td class="px-6 py-4">{{ $data->no_hp }}</td>
                                     <td class="px-6 py-4">{{ $data->agama->nama ?? 'N/A' }}</td>
+                                    <td class="px-6 py-4">{{ $data->buku->judul ?? 'N/A' }}</td>
+                                    <!-- Menampilkan Nama Buku -->
                                     <td class="px-6 py-4">{{ $data->alamat }}</td>
                                     <td class="px-6 py-4">
                                         <div class="flex space-x-3">

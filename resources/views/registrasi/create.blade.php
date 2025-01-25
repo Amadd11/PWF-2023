@@ -28,8 +28,8 @@
                         <div class="form-group">
                             <label for="nama"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama</label>
-                            <input type="text" id="nama" name="nama"
-                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm form-control focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}"
+                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 placeholder="Masukkan nama lengkap" required>
                         </div>
 
@@ -37,8 +37,8 @@
                         <div class="form-group">
                             <label for="email"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                            <input type="email" id="email" name="email"
-                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm form-control focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 placeholder="Masukkan email valid" required>
                         </div>
 
@@ -47,7 +47,8 @@
                             <label for="tanggal_lahir"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tanggal Lahir</label>
                             <input type="date" id="tanggal_lahir" name="tanggal_lahir"
-                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm form-control focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                value="{{ old('tanggal_lahir') }}"
+                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 required>
                         </div>
 
@@ -55,8 +56,8 @@
                         <div class="form-group">
                             <label for="no_hp"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nomor Telp</label>
-                            <input type="text" id="no_hp" name="no_hp"
-                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm form-control focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            <input type="tel" id="no_hp" name="no_hp" value="{{ old('no_hp') }}"
+                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 placeholder="Masukkan nomor telepon" required>
                         </div>
 
@@ -65,11 +66,30 @@
                             <label for="agama"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Agama</label>
                             <select id="agama" name="agama"
-                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm form-control focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 required>
                                 <option value="" disabled selected>Pilih agama</option>
                                 @foreach ($agama as $d)
-                                    <option value="{{ $d->id }}">{{ $d->nama }}</option>
+                                    <option value="{{ $d->id }}" {{ old('agama') == $d->id ? 'selected' : '' }}>
+                                        {{ $d->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Buku -->
+                        <div class="form-group">
+                            <label for="buku"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Buku</label>
+                            <select id="buku" name="buku"
+                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                required>
+                                <option value="" disabled selected>Pilih Buku</option>
+                                @foreach ($buku as $d)
+                                    <option value="{{ $d->id }}" {{ old('buku') == $d->id ? 'selected' : '' }}>
+                                        {{ $d->judul }}
+                                        <!-- Pastikan ini sesuai dengan kolom nama buku di database -->
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -79,16 +99,20 @@
                             <label for="alamat"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Alamat</label>
                             <textarea id="alamat" name="alamat" rows="4"
-                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm form-control focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                placeholder="Masukkan alamat lengkap" required></textarea>
+                                class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                placeholder="Masukkan alamat lengkap" required>{{ old('alamat') }}</textarea>
                         </div>
 
                         <!-- Submit Button -->
                         <div class="flex mt-6 space-x-4">
                             <button type="submit"
-                                class="px-4 py-2 text-white bg-blue-500 rounded-md btn btn-primary hover:bg-blue-600">Daftar</button>
+                                class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                Daftar
+                            </button>
                             <a href="{{ route('registrasi.index') }}"
-                                class="px-4 py-2 text-white bg-gray-500 rounded-md btn btn-secondary hover:bg-gray-600">Kembali</a>
+                                class="px-4 py-2 text-white bg-gray-500 rounded-md hover:bg-gray-600">
+                                Kembali
+                            </a>
                         </div>
                     </form>
                 </div>

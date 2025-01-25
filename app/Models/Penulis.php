@@ -10,4 +10,9 @@ class Penulis extends Model
     use HasFactory;
 
     protected $fillable = ['nama'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

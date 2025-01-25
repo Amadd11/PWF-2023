@@ -18,10 +18,13 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('no_hp');
             $table->unsignedBigInteger('id_agama'); // Ubah jenis data menjadi unsignedBigInteger
+            $table->unsignedBigInteger('id_buku'); // Ubah jenis data menjadi unsignedBigInteger
             $table->text('alamat');
             $table->timestamps();
 
-            $table->foreign('id_agama')->references('id')->on('agama'); // Tambahkan foreign key
+            $table->foreign('id_agama')->references('id')->on('agama');
+            $table->foreign('id_buku')->references('id')->on('buku');
+            // Tambahkan foreign key
         });
     }
 

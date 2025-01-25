@@ -47,4 +47,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Todo::class);
     }
+    public function registrasi()
+    {
+        return $this->hasMany(Registrasi::class);
+    }
+    public function buku()
+    {
+        return $this->hasMany(Buku::class);
+    }
+    public function penulis()
+    {
+        return $this->hasMany(Penulis::class);
+    }
 }

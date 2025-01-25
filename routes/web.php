@@ -52,7 +52,6 @@ Route::middleware('auth')->group(function () {
         Route::patch('/user/{user}/removeadmin', [UserController::class, 'removeadmin'])->name('user.removeadmin');
         Route::resource('buku', BukuController::class);
         Route::resource('penulis', PenulisController::class);
-        Route::resource('registrasi', RegistrasiController::class);
     });
 });
 

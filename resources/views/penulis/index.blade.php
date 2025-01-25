@@ -11,7 +11,7 @@
                 <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between">
                         <div>
-                            <x-create-button href="{{ route('penulis.create') }}" />
+                            <x-penulis-button href="{{ route('penulis.create') }}" />
                         </div>
                         <div>
                             @if (Session::has('pesan'))
