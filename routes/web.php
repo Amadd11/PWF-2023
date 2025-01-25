@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
@@ -45,6 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
         Route::patch('/user/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('user.makeadmin');
         Route::patch('/user/{user}/removeadmin', [UserController::class, 'removeadmin'])->name('user.removeadmin');
+        Route::resource('buku', BukuController::class);
+        Route::resource('penulis', PenulisController::class);
     });
 });
 

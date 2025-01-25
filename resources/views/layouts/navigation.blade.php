@@ -19,6 +19,12 @@
                         {{ __('Todo') }}
                     </x-nav-link>
                     @can('admin')
+                        <x-nav-link :href="route('penulis.index')" :active="request()->routeIs('penulis.index')">
+                            {{ __('Penulis') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('buku.index')" :active="request()->routeIs('buku.index')">
+                            {{ __('Buku') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                             {{ __('User') }}
                         </x-nav-link>
@@ -90,9 +96,15 @@
                 {{ __('Todo') }}
             </x-responsive-nav-link>
             @can('admin')
-                <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                <x-nav-link :href="route('penulis.index')" :active="request()->routeIs('penulis.index')">
+                    {{ __('Penulis') }}
+                </x-nav-link>
+                <x-nav-link :href="route('buku.index')" :active="request()->routeIs('buku.index')">
+                    {{ __('Buku') }}
+                </x-nav-link>
+                <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                     {{ __('User') }}
-                </x-responsive-nav-link>
+                </x-nav-link>
             @endcan
         </div>
 
